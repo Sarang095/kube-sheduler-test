@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+  labels:
+    name: redis
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: name
+                operator: In
+                values: 
+                  - nginx1
+          topologyKey: "kubernetes.io/hostname"
+  containers:
+  - name: redis
+    image: redis
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
